@@ -3,9 +3,9 @@ from django.db import models
 
 class Card(models.Model):
     title = models.CharField(max_length=200)
-    oracle_text = models.TextField()
-    flavor_text = models.TextField()
-    mana_cost = models.TextField()
+    oracle_text = models.TextField(null=True)
+    flavor_text = models.TextField(null=True)
+    mana_cost = models.TextField(null=True)
     colors = models.TextField()
     set = models.ForeignKey('Set', on_delete=models.PROTECT)
     tags = models.TextField()
@@ -13,6 +13,9 @@ class Card(models.Model):
 
     def __str__(self):
         return f'Карта: {self.title}'
+
+    class Meta:
+        app_label = 'magic'
 
 
 class Set(models.Model):
