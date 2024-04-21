@@ -85,7 +85,6 @@ class Parser:
 
         card.title = soup.find(class_='card-text-card-name').text.strip()
         print(f'Карта: {card.title}')
-        # card_dict['card_type'] = soup.find(class_='card-text-type-line').text.strip().split(' — ')[0]  # TODO
         card.img = soup.find(class_='card-image-front').img['src']
 
         if soup.find(class_='card-text-oracle'):
