@@ -13,10 +13,10 @@ def main():
     parser1 = Parser(url)
     helium.start_firefox()
     count = 0
-    for i in range(100):
+    for i in range(20):
         count += 1
         one_card = parser1.parser(url)
-        print(f'Карта {count + 1}: \t{one_card}\n\n')
+        print(f'Карта {count}: \t{one_card}\n\n')
 
 
 if __name__ == '__main__':

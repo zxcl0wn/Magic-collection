@@ -6,7 +6,7 @@ class Card(models.Model):
     oracle_text = models.TextField(null=True)
     flavor_text = models.TextField(null=True)
     mana_cost = models.TextField(null=True)
-    colors = models.TextField()
+    colors = models.TextField(null=True)
     set = models.ForeignKey('Set', on_delete=models.PROTECT)
     tags = models.TextField()
     img = models.ImageField()
