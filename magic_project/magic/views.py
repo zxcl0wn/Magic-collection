@@ -4,10 +4,10 @@ from .models import Card
 
 def index(request):
     cards = Card.objects.all()
-    print(cards)
+    for card in cards:
+        card.img = str(card.img).replace('large', 'border_crop')
     context = {
         'cards': cards,
     }
-    print(context)
     return render(request, 'magic/index.html', context=context)
 
