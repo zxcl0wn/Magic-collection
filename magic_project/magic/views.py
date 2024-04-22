@@ -4,6 +4,7 @@ from django.shortcuts import render
 from .models import Card
 
 
+# TODO вынести функции не относящиеся к представлению
 def card_string_to_list(string: str) -> list:
     return string.strip("[]").replace("'", "").split(", ")
 
@@ -42,88 +43,34 @@ def sorting_by_color(color=None, colors_count=None) -> list:
     return filtered_cards
 
 
-def index(request):
-    cards = Card.objects.all()
-    for card in cards:
-        card.img = str(card.img).replace('large', 'border_crop')
-    context = {
-        'cards': cards,
-        'tabs': enum_all_tabs,
-    }
-
-    return render(request, 'magic/base.html', context=context)
-
-
-def white_page(request):
-    filtered_cards = sorting_by_color(color='White', colors_count=1)
-
-    context = {
-        'cards': filtered_cards,
-        'tabs': enum_all_tabs,
-    }
-    return render(request, 'magic/white_page.html', context=context)
-
-
-def blue_page(request):
-    filtered_cards = sorting_by_color(color='Blue', colors_count=1)
-
-    context = {
-        'cards': filtered_cards,
-        'tabs': enum_all_tabs,
-    }
-    return render(request, 'magic/blue_page.html', context=context)
-
-
-def black_page(request):
-    filtered_cards = sorting_by_color(color='Black', colors_count=1)
-
-    context = {
-        'cards': filtered_cards,
-        'tabs': enum_all_tabs,
-    }
-
-    return render(request, 'magic/black_page.html', context=context)
-
-
-def red_page(request):
-    filtered_cards = sorting_by_color(color='Red', colors_count=1)
-
-    context = {
-        'cards': filtered_cards,
-        'tabs': enum_all_tabs,
-    }
-
-    return render(request, 'magic/red_page.html', context=context)
-
-
-def green_page(request):
-    filtered_cards = sorting_by_color(color='Green', colors_count=1)
-
-    context = {
-        'cards': filtered_cards,
-        'tabs': enum_all_tabs,
-    }
-
-    return render(request, 'magic/green_page.html', context=context)
-
-
-def colorless_page(request):
-    filtered_cards = sorting_by_color(color='Colorless', colors_count=1)
-
-    context = {
-        'cards': filtered_cards,
-        'tabs': enum_all_tabs,
-    }
-
-    return render(request, 'magic/colorless_page.html', context=context)
-
-
 def multi_color_page(request):
     filtered_cards = sorting_by_color(color=None, colors_count=5)
 
+    for card in filtered_cards:
+        card.img = str(card.img).replace('large', 'border_crop')
+
     context = {
         'cards': filtered_cards,
         'tabs': enum_all_tabs,
+        'title': "Multi-C Cards",
     }
 
     return render(request, 'magic/multi_color_page.html', context=context)
+
+
+def color_page(request, color):
+    filtered_cards = sorting_by_color(color=color.capitalize(), colors_count=1)
+
+    for card in filtered_cards:
+        card.img = str(card.img).replace('large', 'border_crop')
+
+    title = f"{color.capitalize()} Cards"
+
+    context = {
+        'cards': filtered_cards,
+        'tabs': enum_all_tabs,
+        'title': title,
+        'color': color.capitalize(),
+    }
+
+    return render(request, 'magic/colors_list.html', context=context)

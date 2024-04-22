@@ -15,7 +15,7 @@ def main():
     count = 0
     for i in range(101):
         count += 1
-        one_card = parser1.parser(url)
+        parser1.parser(url)
         print(f'Карта {count}\n\n\n')
 
 
