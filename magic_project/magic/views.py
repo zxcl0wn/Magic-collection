@@ -10,12 +10,12 @@ enum_all_tabs = {
     'Red': "px-4 py-2 rounded-md hover:bg-red-500 hover:text-white",
     'Green': "px-4 py-2 rounded-md hover:bg-green-500 hover:text-white",
     'Colorless': "px-4 py-2 rounded-md hover:bg-gray-500 hover:text-white",
-    'Multi-C': "px-4 py-2 rounded-md hover:bg-yellow-500 hover:text-white",
+    'Multicolor': "px-4 py-2 rounded-md hover:bg-yellow-500 hover:text-white",
     'Collection': "px-4 py-2 rounded-md hover:bg-purple-500 hover:text-white",
 }
 
 
-def multi_color_page(request):
+def multicolor_page(request):
     filtered_cards = sorting_by_color(color=None, colors_count=5)
 
     for card in filtered_cards:
@@ -27,11 +27,14 @@ def multi_color_page(request):
         'title': "Multi-C Cards",
     }
 
-    return render(request, 'magic/multi_color_page.html', context=context)
+    return render(request, 'magic/multicolor_page.html', context=context)
 
 
 def color_page(request, color):
-    filtered_cards = sorting_by_color(color=color.capitalize(), colors_count=1)
+    if color != "Multicolor":
+        filtered_cards = sorting_by_color(color=color.capitalize(), colors_count=1)
+    else:
+        filtered_cards = sorting_by_color(color=None, colors_count=5)
 
     for card in filtered_cards:
         card.img = str(card.img).replace('large', 'border_crop')
