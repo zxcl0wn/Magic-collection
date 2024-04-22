@@ -8,8 +8,6 @@ def card_string_to_list(string: str) -> list:
     return string.strip("[]").replace("'", "").split(", ")
 
 
-# TODO создать ENUM для цветов и заменить прямое использование цвета
-
 enum_all_colors = {
     "Белый": "White",
     "Синий": "Blue",
@@ -20,14 +18,22 @@ enum_all_colors = {
 }
 
 
-def sorting_by_color(color: str, colors_count: int) -> list:
+def sorting_by_color(color=None, colors_count=None) -> list:
     cards = Card.objects.all()
     filtered_cards = []
 
-    for card in cards:
-        colors_list = card_string_to_list(card.colors)
-        if color in colors_list:
-            if len(colors_list) == colors_count:
+    if colors_count == 1:
+        for card in cards:
+            colors_list = card_string_to_list(card.colors)
+            if color in colors_list:
+                if len(colors_list) == colors_count:
+                    filtered_cards.append(card)
+                    print(f'Карта цвета {color}: {card.title} Цвета: {colors_list}')
+
+    elif colors_count == 5:
+        for card in cards:
+            colors_list = card_string_to_list(card.colors)
+            if len(colors_list) > 1:
                 filtered_cards.append(card)
                 print(f'Карта цвета {color}: {card.title} Цвета: {colors_list}')
 
@@ -45,9 +51,8 @@ def index(request):
     return render(request, 'magic/base.html', context=context)
 
 
-# TODO вынести в отдельную функцию проверку на принадлежность цвету
 def white_page(request):
-    filtered_cards = sorting_by_color('White', colors_count=1)
+    filtered_cards = sorting_by_color(color='White', colors_count=1)
 
     context = {
         'cards': filtered_cards
@@ -105,5 +110,10 @@ def colorless_page(request):
 
 
 def multi_color_page(request):
-    # filtered_cards = sorting_by_color(color=, colors_count=5)
-    pass
+    filtered_cards = sorting_by_color(color=None, colors_count=5)
+
+    context = {
+        'cards': filtered_cards,
+    }
+
+    return render(request, 'magic/multi_color_page.html', context=context)
