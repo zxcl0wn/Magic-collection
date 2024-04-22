@@ -11,12 +11,12 @@ from parser import Parser
 def main():
     url = URL_RANDOM
     parser1 = Parser(url)
-    helium.start_firefox()
+    helium.start_firefox(headless=True)
     count = 0
     for i in range(20):
         count += 1
         one_card = parser1.parser(url)
-        print(f'Карта {count}: \t{one_card}\n\n')
+        print(f'Карта {count}\n\n\n')
 
 
 if __name__ == '__main__':
