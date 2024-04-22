@@ -8,13 +8,15 @@ def card_string_to_list(string: str) -> list:
     return string.strip("[]").replace("'", "").split(", ")
 
 
-enum_all_colors = {
-    "Белый": "White",
-    "Синий": "Blue",
-    "Черный": "Black",
-    "Красный": "Red",
-    "Зелёный": "Green",
-    "Бесцветный": "Colorless",
+enum_all_tabs = {
+    'White': "px-4 py-2 rounded-md hover:bg-white hover:text-gray-900",
+    'Blue': "px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white",
+    'Black': "px-4 py-2 rounded-md hover:bg-black hover:text-white",
+    'Red': "px-4 py-2 rounded-md hover:bg-red-500 hover:text-white",
+    'Green': "px-4 py-2 rounded-md hover:bg-green-500 hover:text-white",
+    'Colorless': "px-4 py-2 rounded-md hover:bg-gray-500 hover:text-white",
+    'Multi-C': "px-4 py-2 rounded-md hover:bg-yellow-500 hover:text-white",
+    'Collection': "px-4 py-2 rounded-md hover:bg-purple-500 hover:text-white",
 }
 
 
@@ -46,6 +48,7 @@ def index(request):
         card.img = str(card.img).replace('large', 'border_crop')
     context = {
         'cards': cards,
+        'tabs': enum_all_tabs,
     }
 
     return render(request, 'magic/base.html', context=context)
