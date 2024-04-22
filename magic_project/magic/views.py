@@ -58,7 +58,8 @@ def white_page(request):
     filtered_cards = sorting_by_color(color='White', colors_count=1)
 
     context = {
-        'cards': filtered_cards
+        'cards': filtered_cards,
+        'tabs': enum_all_tabs,
     }
     return render(request, 'magic/white_page.html', context=context)
 
@@ -67,7 +68,8 @@ def blue_page(request):
     filtered_cards = sorting_by_color(color='Blue', colors_count=1)
 
     context = {
-        'cards': filtered_cards
+        'cards': filtered_cards,
+        'tabs': enum_all_tabs,
     }
     return render(request, 'magic/blue_page.html', context=context)
 
@@ -76,7 +78,8 @@ def black_page(request):
     filtered_cards = sorting_by_color(color='Black', colors_count=1)
 
     context = {
-        'cards': filtered_cards
+        'cards': filtered_cards,
+        'tabs': enum_all_tabs,
     }
 
     return render(request, 'magic/black_page.html', context=context)
@@ -87,6 +90,7 @@ def red_page(request):
 
     context = {
         'cards': filtered_cards,
+        'tabs': enum_all_tabs,
     }
 
     return render(request, 'magic/red_page.html', context=context)
@@ -97,6 +101,7 @@ def green_page(request):
 
     context = {
         'cards': filtered_cards,
+        'tabs': enum_all_tabs,
     }
 
     return render(request, 'magic/green_page.html', context=context)
@@ -107,6 +112,7 @@ def colorless_page(request):
 
     context = {
         'cards': filtered_cards,
+        'tabs': enum_all_tabs,
     }
 
     return render(request, 'magic/colorless_page.html', context=context)
@@ -117,6 +123,7 @@ def multi_color_page(request):
 
     context = {
         'cards': filtered_cards,
+        'tabs': enum_all_tabs,
     }
 
     return render(request, 'magic/multi_color_page.html', context=context)
