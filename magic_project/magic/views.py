@@ -15,30 +15,20 @@ enum_all_tabs = {
 }
 
 
-def multicolor_page(request):
-    filtered_cards = sorting_by_color(color=None, colors_count=5)
-
-    for card in filtered_cards:
-        card.img = str(card.img).replace('large', 'border_crop')
-
-    context = {
-        'cards': filtered_cards,
-        'tabs': enum_all_tabs,
-        'title': "Multi-C Cards",
-    }
-
-    return render(request, 'magic/multicolor_page.html', context=context)
-
-
 def color_page(request, color):
     if color != "Multicolor":
         filtered_cards = sorting_by_color(color=color.capitalize(), colors_count=1)
     else:
         filtered_cards = sorting_by_color(color=None, colors_count=5)
 
+    print(f'\n\nТеги цвета {color}')
     for card in filtered_cards:
         card.img = str(card.img).replace('large', 'border_crop')
 
+        print(f'Описание карты {card.title}:')
+        for tag in card.tags:
+            print(f'{tag}: {card.tags[tag]}')
+        print(f'\n\n')
     title = f"{color.capitalize()} Cards"
 
     context = {

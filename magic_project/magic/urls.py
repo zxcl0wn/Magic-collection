@@ -3,6 +3,5 @@ from .views import *
 
 urlpatterns = [
     path('<str:color>/', color_page, name='color_page'),
-    # path('multicolor_page/', multicolor_page, name='multicolor_page'),
 
 ]

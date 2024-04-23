@@ -11,10 +11,11 @@ from parser import Parser
 def main():
     url = URL_RANDOM
     parser1 = Parser(url)
-    helium.start_firefox(headless=True)
+    helium.start_chrome()
     count = 0
-    for i in range(101):
+    for i in range(100):
         count += 1
+        print(count)
         parser1.parser(url)
         print(f'Карта {count}\n\n\n')
 
