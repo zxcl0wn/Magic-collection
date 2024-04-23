@@ -1,4 +1,5 @@
 URL_RANDOM = 'https://scryfall.com/random'
+URL_CHULANE = 'https://scryfall.com/card/mkc/202/chulane-teller-of-tales'
 URL_COMMIT_MEMORY = 'https://scryfall.com/card/lcc/147/commit-memory'  # Commit//Memory
 URL_TOVOLAR = 'https://scryfall.com/card/mid/246/tovolar-dire-overlord-tovolar-the-midnight-scourge'  # Tovolar
 URL_MUTATE = 'https://scryfall.com/card/c20/64/sawtusk-demolisher'  # Mutate

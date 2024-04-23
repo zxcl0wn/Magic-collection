@@ -8,7 +8,8 @@ class Card(models.Model):
     mana_cost = models.TextField(null=True)
     colors = models.TextField(null=True)
     set = models.ForeignKey('Set', on_delete=models.PROTECT)
-    tags = models.TextField()
+    # tags = models.TextField()
+    tags = models.JSONField(null=True)
     img = models.ImageField()
 
     def __str__(self):
