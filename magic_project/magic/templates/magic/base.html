@@ -1,29 +1,30 @@
-{% load static %}
-<head>
-   <link rel="stylesheet" href="{% static 'magic/styles.css' %}">
-    <title>{{ title }}</title>
-</head>
-<style>h1, h2, h3, h4, h5, h6 { font-family: 'Archivo', sans-serif; --font-sans: 'Archivo'; }
-</style>
-<style>body { font-family: 'Rethink Sans', sans-serif; --font-sans: 'Rethink Sans'; }
-</style>
-<body>
-
-<div class="flex flex-col">
-  <header class="bg-gray-900 text-white py-4 px-6 fixed top-0 left-0 right-0 z-10 shadow-md">
-    <nav class="flex items-center justify-center">
-      <div class="flex space-x-4">
-          {% for key, value in tabs.items %}
-              <a href="/{{ key }}" class="{{ value }}">{{ key }}</a>
-          {% endfor %}
-      </div>
-    </nav>
-  </header>
-
-  <main class="bg-gray-100 dark:bg-gray-800 py-8 px-6 mt-16">
-    {% block content %}
-    {% endblock %}
-  </main>
+{#{% load static %}#}
+{#<head>#}
+{#   <link rel="stylesheet" href="{% static 'magic/styles.css' %}">#}
+{#    <title>{{ title }}</title>#}
+{#</head>#}
+{#<style>h1, h2, h3, h4, h5, h6 { font-family: 'Archivo', sans-serif; --font-sans: 'Archivo'; }#}
+{#</style>#}
+{#<style>body { font-family: 'Rethink Sans', sans-serif; --font-sans: 'Rethink Sans'; }#}
+{#</style>#}
+{#<body>#}
+{##}
+{#<div class="flex flex-col">#}
+{#  <header class="bg-gray-900 text-white py-4 px-6 fixed top-0 left-0 right-0 z-10 shadow-md">#}
+{#    <nav class="flex items-center justify-center">#}
+{#      <div class="flex space-x-4">#}
+{#          {% for key, value in tabs.items %}#}
+{#              <a href="/{{ key }}" class="{{ value }}">{{ key }}</a>#}
+{#          {% endfor %}#}
+{#      </div>#}
+{#    </nav>#}
+{#  </header>#}
+{##}
+{#  <main class="bg-gray-100 dark:bg-gray-800 py-8 px-6 mt-16">#}
+{#    {% block content %}#}
+{#    {% endblock %}#}
+{#  </main>#}
+{##}
 {#    <div class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">#}
 {#      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md w-full max-w-2xl p-6">#}
 {#        <div class="flex justify-between items-center mb-4">#}
@@ -45,6 +46,36 @@
 {#        </div>#}
 {#      </div>#}
 {#    </div>#}
+{##}
+{#</div>#}
+{#</body>#}
 
-</div>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'magic/styles.css' %}">
+</head>
+<body>
+    <div class="flex flex-col">
+        <header class="bg-gray-900 text-white py-4 px-6 fixed top-0 left-0 right-0 z-10 shadow-md">
+            <nav class="flex items-center justify-center">
+                <div class="flex space-x-4">
+                    {% for key, value in tabs.items %}
+                        <a href="/{{ key }}" class="{{ value }}">{{ key }}</a>
+                    {% endfor %}
+                </div>
+            </nav>
+        </header>
+
+        <main class="bg-gray-100 dark:bg-gray-800 py-8 px-6 mt-16">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
 </body>
+</html>
