@@ -84,12 +84,14 @@ class Parser:
         card.img = soup.find(class_='card-image-front').img['src']
 
         if soup.find(class_='card-text-oracle'):
-            card.oracle_text = soup.find(class_='card-text-oracle').text.strip().replace('\n', ' ')
+            card.oracle_text = soup.find(class_='card-text-oracle').text.strip()
         else:
             card.oracle_text = None
 
+
         if soup.find(class_='card-text-flavor'):
             card.flavor_text = soup.find(class_='card-text-flavor').text.strip()
+            print(card.flavor_text)
         else:
             card.flavor_text = None
 

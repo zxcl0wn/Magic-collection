@@ -1,4 +1,3 @@
-<!-- magic/colors_list.html -->
 {% extends 'magic/base.html' %}
 {% load static %}
 
@@ -15,7 +14,7 @@
               <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
                 Add to Collection
               </button>
-              <button class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded view-card" data-id="{{ card.id }}">
+              <button class="bg-violet-500 hover:bg-violet-600 text-white font-medium py-2 px-4 rounded view-card" data-id="{{ card.id }}">
                 View Card
               </button>
             </div>
@@ -25,11 +24,11 @@
       {% endfor %}
     </div>
 
-    <div id="dialog" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div onclick="document.getElementById('dialog').classList.add('hidden')" id="dialog" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md w-full max-w-2xl p-6">
         <div class="flex justify-between items-center mb-4">
           <h3 id="card-title" class="text-lg font-semibold text-white">Card Title</h3>
-          <button id="close-dialog" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded">Close</button>
+          <button id="close-dialog" class="bg-gray-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded">Close</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="aspect-w-16 aspect-h-9">
@@ -51,8 +50,12 @@
     </div>
 
     <script>
+    {#window.open("https://doc.rust-lang.org/stable/book/ch05-00-structs.html");#}
         document.querySelectorAll('.view-card').forEach(button => {
             button.addEventListener('click', function(e) {
+               {#var audio = new Audio('https://ep128.hostingradio.ru:8030/ep128');#}
+                {#audio.volume = 0.3;#}
+                {#audio.play()``````````````````````````#}
                 const cardId = this.getAttribute('data-id');
                 const moreDetails = e.target.parentNode.parentNode.parentNode.querySelector("div[id*='add']")
                 const cardOracle = moreDetails.dataset["oracleText"];
@@ -99,10 +102,6 @@
             const dialog = document.getElementById('dialog');
             dialog.classList.add('hidden');
         });
-        document.getElementById('close-dialog-2').addEventListener('click', function() {
-            const dialog = document.getElementById('dialog');
-            dialog.classList.add('hidden');
-        });
-    </script>
 
+    </script>
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render
 from .models import Card
 from .func_for_views import *
@@ -21,6 +22,9 @@ def color_page(request, color):
     else:
         filtered_cards = sorting_by_color(color=None, colors_count=5)
 
+    if len(filtered_cards) == 0:
+        raise Http404()
+
     print(f'\n\nТеги цвета {color}')
     for card in filtered_cards:
         card.img = str(card.img).replace('large', 'border_crop')
@@ -39,3 +43,7 @@ def color_page(request, color):
     }
 
     return render(request, 'magic/colors_list.html', context=context)
+
+
+# def pageNotFound(request, exception):
+#     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
