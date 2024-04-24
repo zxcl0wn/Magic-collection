@@ -69,7 +69,7 @@ class ParserTest(TestCase):
         card = parser.parser(url)
 
         self.assertEqual(card.title, 'Chulane, Teller of Tales')
-        self.assertEqual(card.oracle_text, 'Vigilance Whenever you cast a creature spell, draw a card, then you may put a land card from your hand onto the battlefield. {3}, {T}: Return target creature you control to its owner’s hand.')
+        self.assertEqual(card.oracle_text, 'Vigilance\nWhenever you cast a creature spell, draw a card, then you may put a land card from your hand onto the battlefield.\n{3}, {T}: Return target creature you control to its owner’s hand.')
         self.assertEqual(card.flavor_text, None)
         self.assertEqual(card.mana_cost, '{2}{G}{W}{U}')
         self.assertEqual(card.img, 'https://cards.scryfall.io/large/front/d/1/d1499a4b-1af1-4913-8e26-57d0707264db.jpg?1706240978')

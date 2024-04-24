@@ -19,15 +19,16 @@
               </button>
             </div>
           </div>
-          <div class="hidden" id="additional-info-{{ card.id }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}"></div>
+{#          <div class="hidden" id="additional-info-{{ card.id }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}"></div>#}
+            <div class="hidden" id="additional-info-{{ card.id }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}"></div>
         </div>
       {% endfor %}
     </div>
 
     <div onclick="document.getElementById('dialog').classList.add('hidden')" id="dialog" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md w-full max-w-2xl p-6">
+      <div onclick="popa()" class="bg-white dark:bg-gray-900 rounded-lg shadow-md w-full max-w-3xl p-6">
         <div class="flex justify-between items-center mb-4">
-          <h3 id="card-title" class="text-lg font-semibold text-white">Card Title</h3>
+          <h3 id="card-title" class="flex align-middle items-center text-lg font-semibold text-white gap-1">Card Title</h3>
           <button id="close-dialog" class="bg-gray-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded">Close</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -35,8 +36,8 @@
             <img id="card-image" src="{% static 'magic/img/placeholder.jpg' %}" alt="Card Image" class="w-full h-full object-cover" />
           </div>
             <div>
-              <div class="text-white" id="card-oracle"></div><br><hr class="hidden" id="id_hr"><br>
-              <div class="text-white" id="card-flavor"></div>
+              <pre class="whitespace-pre-line align-middle text-white" id="card-oracle"></pre><br><hr class="hidden" id="id_hr"><br>
+              <pre class="whitespace-pre-line block text-white" id="card-flavor"></pre>
             </div>
           <div>
             <div class="flex justify-between items-center">
@@ -50,12 +51,9 @@
     </div>
 
     <script>
-    {#window.open("https://doc.rust-lang.org/stable/book/ch05-00-structs.html");#}
+    function popa(e) {return e.preventDefault();}
         document.querySelectorAll('.view-card').forEach(button => {
             button.addEventListener('click', function(e) {
-               {#var audio = new Audio('https://ep128.hostingradio.ru:8030/ep128');#}
-                {#audio.volume = 0.3;#}
-                {#audio.play()``````````````````````````#}
                 const cardId = this.getAttribute('data-id');
                 const moreDetails = e.target.parentNode.parentNode.parentNode.querySelector("div[id*='add']")
                 const cardOracle = moreDetails.dataset["oracleText"];
@@ -66,31 +64,31 @@
                 const dialog = document.getElementById('dialog');
                 const hidden_hr = document.getElementById('id_hr');
                 dialog.classList.remove('hidden');
-                // Устанавливаем заголовок и изображение карты в диалоговом окне
+
                 console.log(moreDetails)
                 if (cardManaCost !== "None")
-                    document.getElementById('card-title').innerText = cardText + " " + cardManaCost;
+                    document.getElementById('card-title').innerHTML = cardText + " " + cardManaCost;
                 else
-                    document.getElementById('card-title').innerText = cardText;
+                    document.getElementById('card-title').innerHTML = cardText;
 
                 if (cardOracle !== "None" && cardFlavor !== "None") {
-                    document.getElementById('card-oracle').innerText = cardOracle;
-                    document.getElementById('card-flavor').innerText = cardFlavor;
+                    document.getElementById('card-oracle').innerHTML = cardOracle;
+                    document.getElementById('card-flavor').innerHTML = cardFlavor;
                     hidden_hr.classList.remove('hidden');
                 }
                 else if (cardOracle !== "None" && cardFlavor === "None") {
-                    document.getElementById('card-oracle').innerText = cardOracle;
-                    document.getElementById('card-flavor').innerText = null;
+                    document.getElementById('card-oracle').innerHTML = cardOracle;
+                    document.getElementById('card-flavor').innerHTML = null;
                     hidden_hr.classList.add('hidden');
                 }
                 else if (cardOracle === "None" && cardFlavor !== "None") {
-                    document.getElementById('card-oracle').innerText = null;
-                    document.getElementById('card-flavor').innerText = cardFlavor;
+                    document.getElementById('card-oracle').innerHTML = null;
+                    document.getElementById('card-flavor').innerHTML = cardFlavor;
                     hidden_hr.classList.add('hidden');
                 }
                     else if (cardOracle === "None" && cardFlavor === "None") {
-                    document.getElementById('card-oracle').innerText = null;
-                    document.getElementById('card-flavor').innerText = null;
+                    document.getElementById('card-oracle').innerHTML = null;
+                    document.getElementById('card-flavor').innerHTML = null;
                     hidden_hr.classList.remove('hidden');
                 }
 

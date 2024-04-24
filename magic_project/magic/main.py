@@ -9,11 +9,11 @@ from parser import Parser
 
 
 def main():
-    url = 'https://scryfall.com/card/big/88/lost-jitte'
+    url = URL_RANDOM
     parser1 = Parser(url)
-    helium.start_chrome()
+    helium.start_chrome(headless=True)
     count = 0
-    for i in range(1):
+    for i in range(200):
         count += 1
         print(count)
         parser1.parser(url)

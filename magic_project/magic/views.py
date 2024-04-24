@@ -2,6 +2,8 @@ from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render
 from .models import Card
 from .func_for_views import *
+from constants import *
+import re
 
 
 enum_all_tabs = {
@@ -15,6 +17,8 @@ enum_all_tabs = {
     'Collection': "px-4 py-2 rounded-md hover:bg-purple-500 hover:text-white",
 }
 
+cards_icons = CARDS_ICONS
+
 
 def color_page(request, color):
     if color != "Multicolor":
@@ -26,6 +30,8 @@ def color_page(request, color):
         raise Http404()
 
     print(f'\n\nТеги цвета {color}')
+    regexp = r"({.+?})"
+
     for card in filtered_cards:
         card.img = str(card.img).replace('large', 'border_crop')
 
@@ -33,13 +39,22 @@ def color_page(request, color):
         for tag in card.tags:
             print(f'{tag}: {card.tags[tag]}')
         print(f'\n\n')
+
+        if card.mana_cost is not None:
+            card.mana_cost = re.sub(regexp, lambda match: f"<img class='w-5 inline' src='{cards_icons.get(match.group(1), '')}' />", card.mana_cost)
+
+        if card.oracle_text is not None:
+            card.oracle_text = re.sub(regexp, lambda match: f"<img class='pb-[4px] w-4 inline' src='{cards_icons.get(match.group(1), '')}' />", card.oracle_text)
+
     title = f"{color.capitalize()} Cards"
+
 
     context = {
         'cards': filtered_cards,
         'tabs': enum_all_tabs,
         'title': title,
         'color': color.capitalize(),
+
     }
 
     return render(request, 'magic/colors_list.html', context=context)
