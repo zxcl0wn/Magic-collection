@@ -4,6 +4,7 @@ from .models import Card, Set
 from .func_for_views import *
 from constants import *
 import re
+import json
 
 enum_all_tabs = {
     'White': "px-4 py-2 rounded-md hover:bg-white hover:text-gray-900",
@@ -49,6 +50,8 @@ def color_page(request, color):
         if card.oracle_text is not None:
             card.oracle_text = re.sub(regexp, lambda match: f"<img class='pb-[4px] w-4 inline' src='{cards_icons.get(match.group(1), '')}' />", card.oracle_text)
 
+        card.tags = json.dumps(card.tags)
+
     title = f"{color.capitalize()} Cards"
 
     context = {
@@ -57,6 +60,9 @@ def color_page(request, color):
         'title': title,
         'color': color.capitalize(),
     }
+
+
+
 
     return render(request, 'magic/colors_list.html', context=context)
 
