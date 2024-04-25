@@ -113,14 +113,17 @@
         document.getElementById('tags-button').addEventListener('click', function() {
             const tagList = document.getElementById('card-tags');
             const textList = document.getElementById('hidden-text');
+            const buttonName = document.getElementById('tags-button');
 
             if (tagList.classList.contains('hidden')) {
                 tagList.classList.remove('hidden');
                 textList.classList.add('hidden');
+                buttonName.innerText = "Description";
             } else {
             // В противном случае скрыть их
                 tagList.classList.add('hidden');
                 textList.classList.remove('hidden');
+                buttonName.innerText = "Tags";
         }
         });
 
