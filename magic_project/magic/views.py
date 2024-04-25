@@ -1,10 +1,9 @@
 from django.http import HttpResponseNotFound, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Card, Set
 from .func_for_views import *
 from constants import *
 import re
-
 
 enum_all_tabs = {
     'White': "px-4 py-2 rounded-md hover:bg-white hover:text-gray-900",
@@ -18,6 +17,10 @@ enum_all_tabs = {
 }
 
 cards_icons = CARDS_ICONS
+
+
+def home(request):
+    return redirect('/cards/Multicolor', permanent=False)
 
 
 def color_page(request, color):
@@ -48,19 +51,15 @@ def color_page(request, color):
 
     title = f"{color.capitalize()} Cards"
 
-
     context = {
         'cards': filtered_cards,
         'tabs': enum_all_tabs,
         'title': title,
         'color': color.capitalize(),
-
     }
+
     return render(request, 'magic/colors_list.html', context=context)
 
-
-# def pageNotFound(request, exception):
-#     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
 
 def delete_card(card_id):
     try:

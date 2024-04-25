@@ -20,12 +20,12 @@
             </div>
           </div>
 {#          <div class="hidden" id="additional-info-{{ card.id }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}"></div>#}
-            <div class="hidden" id="additional-info-{{ card.id }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}"></div>
+            <div class="hidden" id="additional-info-{{ card.id }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}" data-tags="{{ card.tags }}"></div>
         </div>
       {% endfor %}
     </div>
 
-    <div onclick="document.getElementById('dialog').classList.add('hidden')" id="dialog" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div onclick="" id="dialog" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div onclick="popa()" class="bg-white dark:bg-gray-900 rounded-lg shadow-md w-full max-w-3xl p-6">
         <div class="flex justify-between items-center mb-4">
           <h3 id="card-title" class="flex align-middle items-center text-lg font-semibold text-white gap-1">Card Title</h3>
@@ -35,15 +35,20 @@
           <div class="aspect-w-16 aspect-h-9">
             <img id="card-image" src="{% static 'magic/img/placeholder.jpg' %}" alt="Card Image" class="w-full h-full object-cover" />
           </div>
-            <div>
+            <div id="hidden-text">
               <pre class="whitespace-pre-line align-middle text-white" id="card-oracle"></pre><br><hr class="hidden" id="id_hr"><br>
               <pre class="whitespace-pre-line block text-white italic" id="card-flavor"></pre>
+            </div>
+            <div class="whitespace-pre-line align-middle text-white hidden" id="card-tags">
+{#                    <h4 class="text-white">Tags:</h4>#}
+{#                    <ul id="tag-list" class="text-white"></ul>#}
             </div>
           <div>
             <div class="flex justify-between items-center">
               <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
                 Add to Collection
               </button>
+                <button id="tags-button" class="w-40 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded" data-tags="{{ card.tags|join:', ' }}">Tags</button>
             </div>
       </div>
         </div>
@@ -63,9 +68,12 @@
                 const cardText = e.target.parentNode.parentNode.querySelector('h3').innerText;
                 const dialog = document.getElementById('dialog');
                 const hidden_hr = document.getElementById('id_hr');
+                const tags = document.getElementById('card-tags');
                 dialog.classList.remove('hidden');
 
                 console.log(moreDetails)
+                tags.innerHTML = '!!!';
+
                 if (cardManaCost !== "None")
                     document.getElementById('card-title').innerHTML = cardText + " " + cardManaCost;
                 else
@@ -98,8 +106,25 @@
 
         document.getElementById('close-dialog').addEventListener('click', function() {
             const dialog = document.getElementById('dialog');
+
             dialog.classList.add('hidden');
         });
+
+        document.getElementById('tags-button').addEventListener('click', function() {
+            const tagList = document.getElementById('card-tags');
+            const textList = document.getElementById('hidden-text');
+
+            if (tagList.classList.contains('hidden')) {
+                tagList.classList.remove('hidden');
+                textList.classList.add('hidden');
+            } else {
+            // В противном случае скрыть их
+                tagList.classList.add('hidden');
+                textList.classList.remove('hidden');
+        }
+        });
+
+
 
     </script>
 {% endblock %}
