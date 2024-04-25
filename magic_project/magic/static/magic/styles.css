@@ -768,14 +768,6 @@ video {
   padding-bottom: 4px;
 }
 
-.pt-10 {
-  padding-top: 2.5rem;
-}
-
-.pb-5 {
-  padding-bottom: 1.25rem;
-}
-
 .align-middle {
   vertical-align: middle;
 }
@@ -791,6 +783,10 @@ video {
 
 .font-semibold {
   font-weight: 600;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .text-white {

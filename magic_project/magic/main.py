@@ -2,7 +2,7 @@ import os
 import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'magic_project.magic_project.settings')
 django.setup()
-
+import magic.views
 import helium
 from magic_project.constants import *
 from parser import Parser
@@ -21,4 +21,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    magic.views.delete_card(card_id=1)
+    # magic.views.delete_set(set_id=2)

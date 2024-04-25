@@ -37,7 +37,7 @@
           </div>
             <div>
               <pre class="whitespace-pre-line align-middle text-white" id="card-oracle"></pre><br><hr class="hidden" id="id_hr"><br>
-              <pre class="whitespace-pre-line block text-white" id="card-flavor"></pre>
+              <pre class="whitespace-pre-line block text-white italic" id="card-flavor"></pre>
             </div>
           <div>
             <div class="flex justify-between items-center">
@@ -57,7 +57,7 @@
                 const cardId = this.getAttribute('data-id');
                 const moreDetails = e.target.parentNode.parentNode.parentNode.querySelector("div[id*='add']")
                 const cardOracle = moreDetails.dataset["oracleText"];
-                const cardFlavor = moreDetails.dataset["flavorText"]
+                const cardFlavor = moreDetails.dataset["flavorText"];
                 const cardManaCost = moreDetails.dataset["manaCost"];
                 const cardImage = e.target.parentNode.parentNode.parentNode.querySelector("img").src;
                 const cardText = e.target.parentNode.parentNode.querySelector('h3').innerText;

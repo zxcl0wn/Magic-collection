@@ -1,6 +1,6 @@
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render
-from .models import Card
+from .models import Card, Set
 from .func_for_views import *
 from constants import *
 import re
@@ -56,9 +56,59 @@ def color_page(request, color):
         'color': color.capitalize(),
 
     }
-
     return render(request, 'magic/colors_list.html', context=context)
 
 
 # def pageNotFound(request, exception):
 #     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
+
+def delete_card(card_id):
+    try:
+        card = Card.objects.get(id=card_id)
+        card.delete()
+        print(f'Карта {card.title} удалена из БД')
+    except Exception as e:
+        print(f'Карты по id {card_id} не существует')
+        return None
+
+
+def update_card(card_id, new_title=None, new_oracle_text=None, new_flavor_text=None, new_mana_cost=None, new_colors=None, new_tags=None, new_img=None):
+    card = Card.objects.get(id=card_id)
+
+    if new_title is not None:
+        card.title = new_title
+    if new_oracle_text is not None:
+        card.oracle_text = new_oracle_text
+    if new_flavor_text is not None:
+        card.flavor_text = new_flavor_text
+    if new_mana_cost is not None:
+        card.mana_cost = new_mana_cost
+    if new_colors is not None:
+        card.colors = new_colors
+    if new_tags is not None:
+        card.tags = new_tags
+    if card.img is not None:
+        card.img = new_img
+
+    print(f'Информация о карте {card.title} обновлена')
+    card.save()
+
+
+def delete_set(set_id):
+    try:
+        set_del = Set.objects.get(id=set_id)
+        set_del.delete()
+        print(f'Сет {set_del.name} удален из БД')
+    except Exception as e:
+        print(f'Сета по id {set_id} не существует')
+        return None
+
+
+def update_set(set_id, new_name=None):
+    set = Set.objects.get(id=set_id)
+
+    if new_name is not None:
+        set.name = new_name
+
+    print(f'Информация о сете {set.name} обновлена')
+    set.save()
