@@ -33,9 +33,18 @@ def color_page(request, color):
     if len(filtered_cards) == 0:
         raise Http404()
 
+    colors_icons = {
+        'White': "magic/img/plains.svg",
+        'Blue': "magic/img/island.svg",
+        'Red': "magic/img/mountain.svg",
+        'Green': "magic/img/forest.svg",
+        'Black': "magic/img/swamp.svg",
+        'Colorless': "magic/img/wastes.svg",
+        'Multicolor': "magic/img/colorpie.svg",
+    }
+
     print(f'\n\nТеги цвета {color}')
     regexp = r"({.+?})"
-
     for card in filtered_cards:
         card.img = str(card.img).replace('large', 'border_crop')
 
@@ -59,6 +68,7 @@ def color_page(request, color):
         'tabs': enum_all_tabs,
         'title': title,
         'color': color.capitalize(),
+        'icon': colors_icons[color],
     }
 
 

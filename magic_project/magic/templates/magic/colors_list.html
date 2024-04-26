@@ -73,31 +73,26 @@
                 const tagList = document.getElementById('card-tags');
                 const textList = document.getElementById('hidden-text');
                 const buttonName = document.getElementById('tags-button');
-
-                 // Получите JSON-строку тегов из атрибута data-tags кнопки
                 const tagsJSON = moreDetails.dataset["tags"];
                 console.log(tagsJSON);
-                // Распарсите JSON-строку в объект JavaScript
                 const tagsObj = JSON.parse(tagsJSON);
 
-                // Очистите список тегов перед обновлением
                 tagList.innerHTML = '';
 
-                // Добавьте каждый ключ и его значения в список тегов
                 for (const [key, values] of Object.entries(tagsObj)) {
                     // Создайте элемент для ключа тега
                     const keyElement = document.createElement('h4');
                     keyElement.textContent = key;
-                    keyElement.classList.add('text-white', 'mb-2', 'text-lg');
+                    keyElement.classList.add('text-white','mb-2', 'text-lg', 'font-bold');
                     tagList.appendChild(keyElement);
 
                     // Создайте элемент для значений тега
-                    const valueList = document.createElement('b');
-                    valueList.classList.add('text-white');
+                    const valueList = document.createElement('h2');
+                    valueList.classList.add('text-white',  'mb-6');
                     tagList.appendChild(valueList);
 
                     // Добавьте каждое значение тега в список значений
-                    valueList.innerText = values.join(' • ')
+                    valueList.innerText = values.join(' • ');
                 }
 
                 tagList.classList.add('hidden');

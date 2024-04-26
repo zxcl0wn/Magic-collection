@@ -21,7 +21,7 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
+    main()
 
-    magic.views.delete_card(card_id=1)
+    # magic.views.delete_card(card_id=1)
     # magic.views.delete_set(set_id=2)
