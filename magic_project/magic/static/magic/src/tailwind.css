@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.blurry-background-art {
+    background-color: rgb(34, 34, 34);
+    filter: blur(25px) brightness(1) saturate(300%);
+    background-size: cover;
+    background-position: center top;
+
+}
