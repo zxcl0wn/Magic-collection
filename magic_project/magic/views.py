@@ -1,4 +1,4 @@
-from django.http import HttpResponseNotFound, Http404
+from django.http import HttpResponseNotFound, Http404, HttpResponse
 from django.shortcuts import render, redirect
 from .models import Card, Set
 from .func_for_views import *
@@ -71,9 +71,6 @@ def color_page(request, color):
         'icon': colors_icons[color],
     }
 
-
-
-
     return render(request, 'magic/colors_list.html', context=context)
 
 
@@ -127,3 +124,26 @@ def update_set(set_id, new_name=None):
 
     print(f'Информация о сете {set.name} обновлена')
     set.save()
+
+
+def collection_page(request):
+    cards_in_collection = sorting_by_color(color="White", colors_count=1)
+
+    regexp = r"({.+?})"
+    for card in cards_in_collection:
+        card.img = str(card.img).replace('large', 'border_crop')
+
+        if card.mana_cost is not None:
+            card.mana_cost = re.sub(regexp, lambda match: f"<img class='w-5 inline' src='{cards_icons.get(match.group(1), '')}' />", card.mana_cost)
+
+        if card.oracle_text is not None:
+            card.oracle_text = re.sub(regexp, lambda match: f"<img class='pb-[4px] w-4 inline' src='{cards_icons.get(match.group(1), '')}' />", card.oracle_text)
+
+
+    context = {
+        'tabs': enum_all_tabs,
+        'cards': cards_in_collection,
+
+    }
+
+    return render(request, 'magic/collection.html', context=context)

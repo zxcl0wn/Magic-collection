@@ -1,0 +1,85 @@
+{% extends 'magic/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex flex-col">
+  <main class="bg-gray-100 dark:bg-gray-800 py-1 px-6 flex">
+    <div class="w-2/3 overflow-y-auto" id="all_cards" style="max-height: calc(-6rem + 100vh);">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {% for card in cards %}
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden" id="card_view">
+              <div class="aspect-w-16 aspect-h-9">
+                <img src="{{ card.img }}" alt="Card Image" class="w-full h-full object-cover" id="card_img"/>
+              </div>
+              <div class="p-4">
+                <h3 class="text-white text-lg font-semibold mb-2">{{ card.title }}</h3>
+              </div>
+              <div class="hidden" id="additional-info-{{ card.id }}"  data-set="{{ card.set }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}" data-tags="{{ card.tags }}"></div>
+            </div>
+          {% endfor %}
+        </div>
+    </div>
+    <div class="w-1/3 bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden p-4 sticky top-24">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class=" text-white text-lg font-semibold">Card Title</h3> {# Название #}
+      </div>
+      <div class="grid grid-cols-1 gap-6">
+        <div class="aspect-w-16 aspect-h-9 view-card">
+          <img src="{%  static 'magic/img/innala.jpg' %}" width="400px" height="650px" id="card-img" alt="Card Image" class="object-cover" />
+        </div>  {# Изображение #}
+        <div>
+          <p class="text-gray-500 dark:text-gray-400 mb-4" id="card-oracle">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies lacinia, nisl
+            nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.
+          </p> {# Текст  #}
+          <div class="flex justify-between items-center">
+
+{#            <div>#}
+{#              <p class="text-white mb-1" id="">Rarity</p>#}
+{#              <p class="text-gray-500 font-semibold">Rare</p>#}
+{#            </div>#}
+            <div>
+              <p class="text-white mb-1">Set</p>
+              <p class="text-gray-500 font-semibold" id="card-set">Zendikar Rising</p>
+            </div>
+            <div>
+              <p class="text-white mb-1">Mana Cost</p>
+              <p class="text-gray-500 font-semibold" id="card-mana-cost">2WW</p>
+
+            </div>
+          </div> {# Характеристики #}
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+    <script>
+       document.querySelectorAll('#card_view').forEach(button => {
+            button.addEventListener('click', function(e) {
+            const moreDetails = this.querySelector("div[id*='add']")
+            const cardOracle = moreDetails.dataset["oracleText"];
+            const cardSet = moreDetails.dataset["set"];
+            const cardManaCost = moreDetails.dataset["manaCost"];
+            const cardImage = this.querySelector("img");
+
+            document.getElementById('card-set').innerHTML = cardSet.split("(")[0].trim();
+
+            const cardImg = document.getElementById('card-img');
+            cardImg.src = cardImage.src;
+            console.log(cardImage, cardImg)
+
+            if (cardOracle !== "None")
+                document.getElementById('card-oracle').innerHTML = cardOracle;
+            else
+                document.getElementById('card-oracle').innerHTML = null;
+
+            if (cardManaCost !== "None")
+                document.getElementById('card-mana-cost').innerHTML = cardManaCost;
+            else
+                document.getElementById('card-mana-cost').innerHTML = null;
+
+        });
+    });
+
+</script>
+{% endblock %}
