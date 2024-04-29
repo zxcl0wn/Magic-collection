@@ -6,6 +6,7 @@ import magic.views
 import helium
 from magic_project.constants import *
 from parser import Parser
+from magic.views import *
 
 
 def main():
@@ -21,7 +22,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
 
-    # magic.views.delete_card(card_id=1)
-    # magic.views.delete_set(set_id=2)
+    print(add_card_to_collection(1, 6))

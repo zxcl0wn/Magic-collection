@@ -1,6 +1,6 @@
-from django.http import HttpResponseNotFound, Http404, HttpResponse
+from django.http import HttpResponseNotFound, Http404, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from .models import Card, Set
+from .models import Card, Set, Collection
 from .func_for_views import *
 from constants import *
 import re
@@ -127,10 +127,12 @@ def update_set(set_id, new_name=None):
 
 
 def collection_page(request):
-    cards_in_collection = sorting_by_color(color="White", colors_count=1)
+    # cards_in_collection = sorting_by_color(color="White", colors_count=1)
+
+    collection_cards = Card.objects.filter(collection__user_id=1)
 
     regexp = r"({.+?})"
-    for card in cards_in_collection:
+    for card in collection_cards:
         card.img = str(card.img).replace('large', 'border_crop')
 
         if card.mana_cost is not None:
@@ -139,11 +141,20 @@ def collection_page(request):
         if card.oracle_text is not None:
             card.oracle_text = re.sub(regexp, lambda match: f"<img class='pb-[4px] w-4 inline' src='{cards_icons.get(match.group(1), '')}' />", card.oracle_text)
 
-
     context = {
+        'cards': collection_cards,
         'tabs': enum_all_tabs,
-        'cards': cards_in_collection,
-
     }
 
     return render(request, 'magic/collection.html', context=context)
+
+
+def add_card_to_collection(user_id, card_id):
+    try:
+        user_id = 1
+        card = Card.objects.get(id=card_id)
+        collection, _ = Collection.objects.get_or_create(card=card, user_id=user_id)
+        collection.card = card
+        return JsonResponse({'message': 'Card added to collection successfully'}, status=200)
+    except Exception as e:
+        return e
