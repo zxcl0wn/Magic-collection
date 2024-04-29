@@ -10,7 +10,3 @@
     background-position: center top;
 
 }
-
-#all_cards::-webkit-scrollbar {
-    display: none;
-}
