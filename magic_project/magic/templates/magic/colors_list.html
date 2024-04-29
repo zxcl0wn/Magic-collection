@@ -19,7 +19,7 @@
               </button>
             </div>
           </div>
-            <div class="hidden" id="additional-info-{{ card.id }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}" data-tags="{{ card.tags }}"></div>
+            <div class="hidden" id="additional-info-{{ card.id }}" data-card-id="{{ card.id }}" data-mana-cost="{{ card.mana_cost }}" data-oracle-text="{{ card.oracle_text }}" data-flavor-text="{{ card.flavor_text }}" data-tags="{{ card.tags }}"></div>
         </div>
       {% endfor %}
     </div>
@@ -129,6 +129,15 @@
                 document.getElementById('card-image').src = cardImage;
             });
         });
+
+            // Формирование данных для отправки
+            var data = JSON.stringify({user_id: 1, card_id: card_id});
+
+            // Отправка запроса на сервер
+            xhr.open('POST', '/add_card_to_collection/', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(data);
+          }
 
         document.getElementById('close-dialog').addEventListener('click', function() {
             const dialog = document.getElementById('dialog');

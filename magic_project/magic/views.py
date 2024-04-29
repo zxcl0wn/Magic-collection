@@ -129,8 +129,12 @@ def update_set(set_id, new_name=None):
 def collection_page(request):
     # cards_in_collection = sorting_by_color(color="White", colors_count=1)
 
+    title = "Collection"
     collection_cards = Card.objects.filter(collection__user_id=1)
 
+    colors_icons = {
+        "Collection": "magic/img/dnd_logo.svg",
+    }
     regexp = r"({.+?})"
     for card in collection_cards:
         card.img = str(card.img).replace('large', 'border_crop')
@@ -144,6 +148,8 @@ def collection_page(request):
     context = {
         'cards': collection_cards,
         'tabs': enum_all_tabs,
+        'title': title,
+        'icon': colors_icons["Collection"],
     }
 
     return render(request, 'magic/collection.html', context=context)

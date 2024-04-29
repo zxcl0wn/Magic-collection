@@ -23,5 +23,7 @@ def main():
 
 if __name__ == '__main__':
     # main()
-
-    print(add_card_to_collection(1, 6))
+    for i in range(30):
+        add_card_to_collection(1, i)
+    else:
+        print('Коллекция заполнена')
