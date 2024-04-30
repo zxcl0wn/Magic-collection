@@ -26,7 +26,7 @@
 
     <div id="dialog" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div class="relative dark:bg-gray-900 rounded-lg shadow-md w-full max-w-3xl p-6">
-          <div class="-z-10 absolute inset-0 blurry-background-art" id="view-card"></div>
+        <div class="-z-10 absolute inset-0 blurry-background-art" id="view-card"></div>
         <div class="flex justify-between items-center mb-4">
           <h3 id="card-title" class="flex align-middle items-center text-lg font-semibold text-white gap-1">Card Title</h3>
           <button id="close-dialog" class="bg-gray-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded">Close</button>
@@ -40,12 +40,11 @@
               <pre class="whitespace-pre-line block text-white italic" id="card-flavor"></pre>
             </div>
             <div class="whitespace-pre-line align-middle text-white hidden" id="card-tags">
-{#                    <h4 class="text-white">Tags:</h4>#}
-{#                    <ul id="tag-list" class="text-white"></ul>#}
+
             </div>
           <div>
             <div class="flex justify-between items-center">
-              <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
+              <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded" onclick="addToCollection(this)">
                 Add to Collection
               </button>
                 <button id="tags-button" class="w-40 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded" data-tags="{{ card.tags|join:', ' }}">Tags</button>
@@ -56,9 +55,10 @@
     </div>
 
     <script>
+    let cardulkaId = null;
         function addToCollection(param) {
             const moreDetails = param.parentNode.parentNode.parentNode.querySelector("div[id*='add']")
-            const cardId = moreDetails.dataset["cardId"];
+            const cardId = moreDetails?.dataset["cardId"] || cardulkaId;
 
             fetch("/api/add_to_collection/", {
                 method: "POST",
@@ -67,7 +67,11 @@
                     'X-CSRFToken': '{{ csrf_token }}'
                 },
             });
+
+            const dialog = document.getElementById('dialog');
+            dialog.classList.add('hidden');
     }
+
 
     document.querySelectorAll('.view-card').forEach(button => {
             button.addEventListener('click', function(e) {
@@ -86,6 +90,9 @@
                 const buttonName = document.getElementById('tags-button');
                 const tagsJSON = moreDetails.dataset["tags"];
                 const tagsObj = JSON.parse(tagsJSON);
+
+                cardulkaId = moreDetails.dataset["cardId"];
+
 
                 const viewCard = document.getElementById('view-card');
                 viewCard.style.backgroundImage = `url(${cardImage})`;
