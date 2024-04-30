@@ -7,11 +7,11 @@
     <div class="w-2/3 overflow-y-auto" id="all_cards" style="max-height: calc(-6rem + 100vh);">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {% for card in cards %}
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden" id="card_view">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden flex flex-col justify-between" id="card_view">
               <div class="aspect-w-16 aspect-h-9">
                 <img src="{{ card.img }}" alt="Card Image" class="w-full h-full object-cover" id="card_img"/>
               </div>
-              <div class="p-4">
+              <div class="py-2 px-4">
                 <h3 class="text-white text-lg font-semibold mb-2">{{ card.title }}</h3>
               </div>
               <button class="bg-gray-500 hover:bg-red-600 w-full text-white font-medium pt py-2 px-4" onclick="deleteFromCollection(this)">Delete from Collection</button>

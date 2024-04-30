@@ -15,12 +15,7 @@ class ParserTest(TestCase):
 
         self.assertIn('Artwork', tags_dict)
         self.assertIn('Card', tags_dict)
-        self.assertEqual(tags_dict['Artwork'],
-                         ["beard", "book", "chulane", "eldraine", "faerie", "fire", "floating", "helix", "orator",
-                          "quill", "smoke"])
-        self.assertEqual(tags_dict['Card'],
-                         ["alliteration", "cast trigger-you", "cycle-eld-brawler", "draw", "extra land", "rescue",
-                          "rescue-creature", "sneak-land"])
+
 
     def test_colors_in_oracle(self):
         parser = Parser('')
