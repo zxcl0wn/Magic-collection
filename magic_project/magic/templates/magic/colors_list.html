@@ -11,7 +11,7 @@
           <div class="p-4">
             <h3 class="text-white text-lg font-semibold mb-2">{{ card.title }}</h3>
             <div class="flex justify-between items-center">
-              <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
+              <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded" onclick="addToCollection(this)">
                 Add to Collection
               </button>
               <button class="bg-violet-500 hover:bg-violet-600 text-white font-medium py-2 px-4 rounded view-card" data-id="{{ card.id }}">
@@ -56,9 +56,21 @@
     </div>
 
     <script>
-        document.querySelectorAll('.view-card').forEach(button => {
+        function addToCollection(param) {
+            const moreDetails = param.parentNode.parentNode.parentNode.querySelector("div[id*='add']")
+            const cardId = moreDetails.dataset["cardId"];
+
+            fetch("/api/add_to_collection/", {
+                method: "POST",
+                body: cardId,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+            });
+    }
+
+    document.querySelectorAll('.view-card').forEach(button => {
             button.addEventListener('click', function(e) {
-                const cardId = this.getAttribute('data-id');
                 const moreDetails = e.target.parentNode.parentNode.parentNode.querySelector("div[id*='add']")
                 const cardOracle = moreDetails.dataset["oracleText"];
                 const cardFlavor = moreDetails.dataset["flavorText"];
@@ -130,14 +142,6 @@
             });
         });
 
-            // Формирование данных для отправки
-            var data = JSON.stringify({user_id: 1, card_id: card_id});
-
-            // Отправка запроса на сервер
-            xhr.open('POST', '/add_card_to_collection/', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(data);
-          }
 
         document.getElementById('close-dialog').addEventListener('click', function() {
             const dialog = document.getElementById('dialog');

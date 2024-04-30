@@ -155,12 +155,14 @@ def collection_page(request):
     return render(request, 'magic/collection.html', context=context)
 
 
-def add_card_to_collection(user_id, card_id):
-    try:
+def add_card_to_collection(request):
+    if request.method == 'POST':
+        # Получите ID карты из тела запроса
+        card_id = request.body.decode('utf-8')
+        print(f'card id: {card_id}')
+
         user_id = 1
         card = Card.objects.get(id=card_id)
         collection, _ = Collection.objects.get_or_create(card=card, user_id=user_id)
         collection.card = card
-        return JsonResponse({'message': 'Card added to collection successfully'}, status=200)
-    except Exception as e:
-        return e
+    return HttpResponse(status=200)
