@@ -132,6 +132,9 @@ def collection_page(request):
     title = "Collection"
     collection_cards = Card.objects.filter(collection__user_id=1)
 
+    if len(collection_cards) == 0:
+        return redirect('/cards/Multicolor', permanent=False)
+
     colors_icons = {
         "Collection": "magic/img/dnd_logo.svg",
     }
@@ -157,12 +160,25 @@ def collection_page(request):
 
 def add_card_to_collection(request):
     if request.method == 'POST':
-        # Получите ID карты из тела запроса
+
         card_id = request.body.decode('utf-8')
-        print(f'card id: {card_id}')
+        print(f'add card id: {card_id}')
 
         user_id = 1
         card = Card.objects.get(id=card_id)
         collection, _ = Collection.objects.get_or_create(card=card, user_id=user_id)
         collection.card = card
+    return HttpResponse(status=200)
+
+
+def delete_card_from_collection(request):
+    if request.method == 'POST':
+
+        card_id = request.body.decode('utf-8')
+        print(f'delete card id: {card_id}')
+
+        user_id = 1
+        card = Card.objects.get(id=card_id)
+        collection = Collection.objects.get(card=card, user_id=user_id)
+        collection.delete()
     return HttpResponse(status=200)
